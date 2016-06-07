@@ -7,8 +7,9 @@ public class Programa {
     public static void main(String[] args) {
         String  ip = (String)JOptionPane.showInputDialog("Informe o IP","192.168.0.");
         int porta = Integer.parseInt(JOptionPane.showInputDialog("Informe a Porta","5000"));
+        String  nickname = (String)JOptionPane.showInputDialog("Informe seu nome","Fulano");
         
-        Conexao c = new Conexao(ip, porta);
+        Conexao c = new Conexao(ip, porta, nickname);
         
         JanelaChat j = new JanelaChat(c);
         j.setLocationRelativeTo(null);

@@ -16,10 +16,12 @@ public class Conexao extends Observable {
     private String ip;
     private int porta;
     private String mensagem;
+    private String nickname;
 
-    public Conexao(String ip, int porta) {
+    public Conexao(String ip, int porta, String nickname) {
         this.ip = ip;
         this.porta = porta;
+        this.nickname = nickname;
         new Thread(new Recebe()).start();
     }
 
@@ -71,8 +73,12 @@ public class Conexao extends Observable {
                                 s += (char) b[i];
                             }
                         }
-                        String nome = pacoteRecebido.getAddress().toString() + " disse:";
-                        notifica(nome + s);
+                        String tempName[] = s.split("-", 1);
+                        
+                        String nome = tempName[0] + " disse:";
+                        String mensagem = tempName[1];
+
+                        notifica(nome + mensagem);
                     } catch (Exception e) {
                         System.out.println("erro");
                         try {
@@ -98,8 +104,13 @@ public class Conexao extends Observable {
 
         @Override
         public void run() {
-
-            byte[] dados = texto.getBytes();
+        	//Mensagem
+        	StringBuilder mensagemComNome = new StringBuilder();
+        	
+        	mensagemComNome.append(nickname).append("-").append(texto);
+        	
+        	
+            byte[] dados = mensagemComNome.toString().getBytes();
 
             try {
                 DatagramSocket clientSocket = new DatagramSocket();
