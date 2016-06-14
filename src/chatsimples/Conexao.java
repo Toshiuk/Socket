@@ -66,14 +66,17 @@ public class Conexao extends Observable {
                     DatagramPacket pacoteRecebido = new DatagramPacket(dadosReceber, dadosReceber.length);
                     try {
                         socket.receive(pacoteRecebido);
-                        byte[] b = pacoteRecebido.getData();
+                        byte[] b = null;
+                        b = pacoteRecebido.getData();
                         String s = "";
-                        for (int i = 0; i < b.length; i++) {
+                        for (int i = 0; i < pacoteRecebido.getLength(); i++) {
                             if (b[i] != 0) {
                                 s += (char) b[i];
+                            } else {
+                            	break;
                             }
                         }
-                        String tempName[] = s.split("-", 1);
+                        String tempName[] = s.split("-", 0);
                         
                         String nome = tempName[0] + " disse:";
                         String mensagem = tempName[1];
@@ -106,7 +109,7 @@ public class Conexao extends Observable {
         public void run() {
         	//Mensagem
         	StringBuilder mensagemComNome = new StringBuilder();
-        	
+        	mensagemComNome.setLength(0);
         	mensagemComNome.append(nickname).append("-").append(texto);
         	
         	

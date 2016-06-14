@@ -10,7 +10,7 @@ public class JanelaChat extends javax.swing.JFrame implements Observer {
     private Conexao conexao;
 
     public JanelaChat(Conexao conexao) {
-        super("Chat Simples em Java by @pcollares");
+        super("Chat Sockets");
         this.conexao = conexao;
         initComponents();
         conexao.addObserver(this);
